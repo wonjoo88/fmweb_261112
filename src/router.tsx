@@ -4,7 +4,8 @@ import Dashboard from '@/pages/dashboard'
 import Login from '@/pages/login'
 import Dtin from '@/pages/dtin'
 import Dtob from '@/pages/dtob'
-import { LOGIN_URL, DASHBOARD_URL, DTIN_URL, DTOB_URL } from '@/constants/urls'
+import Dtivr from './pages/dtivr'
+import { LOGIN_URL, DASHBOARD_URL, DTIN_URL, DTOB_URL, DTIVR_URL } from '@/constants/urls'
 
 export const router = createBrowserRouter([
   { path: LOGIN_URL, element: <Login /> },
@@ -14,6 +15,7 @@ export const router = createBrowserRouter([
       { path: DASHBOARD_URL, element: <Dashboard /> },
       { path: DTIN_URL, element: <Dtin /> },
       { path: DTOB_URL, element: <Dtob /> },
+      { path: DTIVR_URL, element: <Dtivr /> },
     ],
   },
   { path: '*', element: <Navigate to={DASHBOARD_URL} replace /> },
