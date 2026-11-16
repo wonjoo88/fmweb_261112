@@ -3,15 +3,18 @@ import AppLayout from '@/components/layout/AppLayout'
 import Dashboard from '@/pages/dashboard'
 import Login from '@/pages/login'
 import Dtin from '@/pages/dtin'
+import Dtob from '@/pages/dtob'
+import { LOGIN_URL, DASHBOARD_URL, DTIN_URL, DTOB_URL } from '@/constants/urls'
 
 export const router = createBrowserRouter([
-  { path: '/login', element: <Login /> }, // 사이드바 없음
+  { path: LOGIN_URL, element: <Login /> },
   {
-    element: <AppLayout />, // 사이드바 + 상단바 + <Outlet />
+    element: <AppLayout />,
     children: [
-      { path: '/', element: <Dashboard /> },
-      { path: '/dtin', element: <Dtin /> },
+      { path: DASHBOARD_URL, element: <Dashboard /> },
+      { path: DTIN_URL, element: <Dtin /> },
+      { path: DTOB_URL, element: <Dtob /> },
     ],
   },
-  { path: '*', element: <Navigate to="/" replace /> },
+  { path: '*', element: <Navigate to={DASHBOARD_URL} replace /> },
 ])
