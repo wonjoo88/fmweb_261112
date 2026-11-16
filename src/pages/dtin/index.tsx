@@ -5,7 +5,7 @@ export default function Dtin() {
   return (
     <div>
       <PageHeader>
-        <Button variant="outline">dd</Button>
+        <Button variant="outline"></Button>
       </PageHeader>
     </div>
   )
