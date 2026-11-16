@@ -1,3 +1,12 @@
+import PageHeader from '@/components/common/PageHeader'
+import { Button } from '@/components/ui/button'
+
 export default function Dtin() {
-  return <>입고현황</>
+  return (
+    <div>
+      <PageHeader>
+        <Button variant="outline">dd</Button>
+      </PageHeader>
+    </div>
+  )
 }
