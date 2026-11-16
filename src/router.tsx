@@ -5,9 +5,9 @@ import Login from '@/pages/login'
 import Dtin from '@/pages/dtin'
 
 export const router = createBrowserRouter([
-  { path: '/login', element: <Login /> },        // 사이드바 없음
+  { path: '/login', element: <Login /> }, // 사이드바 없음
   {
-    element: <AppLayout />,                      // 사이드바 + 상단바 + <Outlet />
+    element: <AppLayout />, // 사이드바 + 상단바 + <Outlet />
     children: [
       { path: '/', element: <Dashboard /> },
       { path: '/dtin', element: <Dtin /> },

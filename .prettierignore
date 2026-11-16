@@ -1,0 +1,7 @@
+dist
+node_modules
+yarn.lock
+HANDOFF.md
+
+# shadcn이 생성한 파일. 다시 add할 때 diff가 커지지 않도록 원본 형식을 유지한다
+src/components/ui

@@ -1,8 +1,3 @@
-
-
-
-export default function Dtin(){
-    return(
-        <>입고현황</>
-    )
+export default function Dtin() {
+  return <>입고현황</>
 }
