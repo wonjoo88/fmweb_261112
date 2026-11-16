@@ -1,6 +1,6 @@
+import ExportButton from '@/components/common/ExportButton'
 import PageHeader from '@/components/common/PageHeader'
 import StatusBadge from '@/components/common/StatusBadge'
-import { Button } from '@/components/ui/button'
 
 export default function Dtin() {
   return (
@@ -14,7 +14,9 @@ export default function Dtin() {
           </>
         }
       >
-        <Button variant="outline"></Button>
+        <div>
+          <ExportButton onSheet={()=>{}} onExcelDown={()=>{}}/>
+        </div>
       </PageHeader>
     </div>
   )
