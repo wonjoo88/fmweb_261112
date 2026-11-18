@@ -1,10 +1,19 @@
-
 import type { LucideIcon } from 'lucide-react'
-import { ChevronDown, Download, FileDown, FileSpreadsheet, SquareArrowOutUpRight, Upload } from 'lucide-react'
+import {
+  ChevronDown,
+  Download,
+  FileDown,
+  FileSpreadsheet,
+  SquareArrowOutUpRight,
+  Upload,
+} from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
-  DropdownMenu, DropdownMenuContent, DropdownMenuItem,
-  DropdownMenuSeparator, DropdownMenuTrigger,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { cn } from '@/lib/utils'
 
@@ -18,16 +27,51 @@ type Props = {
 export default function ExportButton({ onSheet, onExcelDown, onExcelTem, onExcelUp }: Props) {
   // 그룹별로 나누고, 빈 그룹은 버림 → 그룹 사이에만 구분선
   const groups = [
-    [onSheet && <MenuRow key="sheet" icon={FileSpreadsheet} tone="green" external
-        title="구글 시트로 열기" description="실시간 스프레드시트 연동" onSelect={onSheet} />],
     [
-      onExcelDown && <MenuRow key="down" icon={Download}
-        title="엑셀 다운로드" description="조회 목록 전체 내보내기" onSelect={onExcelDown} />,
-      onExcelTem && <MenuRow key="tem" icon={FileDown}
-        title="엑셀 양식 다운로드" description="대량 등록용 표준 템플릿" onSelect={onExcelTem} />,
+      onSheet && (
+        <MenuRow
+          key="sheet"
+          icon={FileSpreadsheet}
+          tone="green"
+          external
+          title="구글 시트로 열기"
+          description="실시간 스프레드시트 연동"
+          onSelect={onSheet}
+        />
+      ),
     ],
-    [onExcelUp && <MenuRow key="up" icon={Upload} tone="violet"
-        title="엑셀 업로드" description=".xlsx, .xls 파일 일괄 등록" onSelect={onExcelUp} />],
+    [
+      onExcelDown && (
+        <MenuRow
+          key="down"
+          icon={Download}
+          title="엑셀 다운로드"
+          description="조회 목록 전체 내보내기"
+          onSelect={onExcelDown}
+        />
+      ),
+      onExcelTem && (
+        <MenuRow
+          key="tem"
+          icon={FileDown}
+          title="엑셀 양식 다운로드"
+          description="대량 등록용 표준 템플릿"
+          onSelect={onExcelTem}
+        />
+      ),
+    ],
+    [
+      onExcelUp && (
+        <MenuRow
+          key="up"
+          icon={Upload}
+          tone="violet"
+          title="엑셀 업로드"
+          description=".xlsx, .xls 파일 일괄 등록"
+          onSelect={onExcelUp}
+        />
+      ),
+    ],
   ]
     .map((g) => g.filter(Boolean))
     .filter((g) => g.length > 0)
@@ -71,9 +115,13 @@ export default function ExportButton({ onSheet, onExcelDown, onExcelTem, onExcel
 // ── 이 파일 안에서만 쓰는 메뉴 항목 ──
 // 메뉴 항목은 focus 시 하위 글자색을 덮어쓰기 때문에, 유지할 색에는 ! (important) 를 붙임
 const TONES = {
-  gray:   { box: 'border-slate-200 bg-slate-50',     icon: 'text-slate-500!',   title: '' },
-  green:  { box: 'border-emerald-100 bg-emerald-50', icon: 'text-emerald-600!', title: '' },
-  violet: { box: 'border-indigo-100 bg-indigo-50',   icon: 'text-indigo-600!',  title: 'text-indigo-700!' },
+  gray: { box: 'border-slate-200 bg-slate-50', icon: 'text-slate-500!', title: '' },
+  green: { box: 'border-emerald-100 bg-emerald-50', icon: 'text-emerald-600!', title: '' },
+  violet: {
+    box: 'border-indigo-100 bg-indigo-50',
+    icon: 'text-indigo-600!',
+    title: 'text-indigo-700!',
+  },
 }
 
 type MenuRowProps = {
@@ -85,16 +133,33 @@ type MenuRowProps = {
   onSelect: () => void
 }
 
-function MenuRow({ icon: Icon, title, description, external, tone = 'gray', onSelect }: MenuRowProps) {
+function MenuRow({
+  icon: Icon,
+  title,
+  description,
+  external,
+  tone = 'gray',
+  onSelect,
+}: MenuRowProps) {
   const t = TONES[tone]
 
   return (
-    <DropdownMenuItem onSelect={onSelect} className="gap-3 rounded-lg px-2.5 py-2 focus:bg-slate-50">
-      <span className={cn('flex size-9 shrink-0 items-center justify-center rounded-lg border', t.box)}>
+    <DropdownMenuItem
+      onSelect={onSelect}
+      className="gap-3 rounded-lg px-2.5 py-2 focus:bg-slate-50"
+    >
+      <span
+        className={cn('flex size-9 shrink-0 items-center justify-center rounded-lg border', t.box)}
+      >
         <Icon className={cn('size-4', t.icon)} />
       </span>
       <span className="flex min-w-0 flex-col gap-0.5">
-        <span className={cn('flex items-center gap-1 text-[13px] font-semibold text-slate-800!', t.title)}>
+        <span
+          className={cn(
+            'flex items-center gap-1 text-[13px] font-semibold text-slate-800!',
+            t.title,
+          )}
+        >
           {title}
           {external && <SquareArrowOutUpRight className="size-3 text-slate-400!" />}
         </span>
