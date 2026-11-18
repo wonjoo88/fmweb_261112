@@ -10,6 +10,8 @@ type Props = {
   onReset: () => void
   onSearch: () => void
   detailSearchTitle?: string
+  keyword?: string
+  onKeywordChange?: (v: string) => void
 }
 
 export default function SearchPanel({
@@ -19,6 +21,8 @@ export default function SearchPanel({
   onReset,
   onSearch,
   detailSearchTitle,
+  keyword,
+  onKeywordChange
 }: Props) {
   const [detailOpen, setDetailOpen] = useState<boolean>(false)
 
@@ -31,8 +35,8 @@ export default function SearchPanel({
       }}
     >
       <div className="mb-4 grid grid-cols-4 gap-4">{children}</div>
-      <div className="flex justify-between gap-2">
-        {keywordPlaceholder && <Input placeholder={keywordPlaceholder} />}
+      <div className="flex justify-between gap-2">  
+        {keywordPlaceholder && <Input value={keyword} placeholder={keywordPlaceholder} onChange={(e)=> onKeywordChange?.(e.target.value)}/>}
         <div className="ml-auto flex gap-1">
           <Button type="button" variant="outline" size="icon" onClick={onReset}>
             <RotateCcw />

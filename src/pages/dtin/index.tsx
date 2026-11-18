@@ -7,6 +7,18 @@ import StatusBadge from '@/components/common/StatusBadge'
 import { subDays } from 'date-fns'
 import { useState } from 'react'
 
+
+const initial = () => ({
+  wmsLinkId: '',
+  startDt: subDays(new Date(), 7),
+  endDt: new Date(),
+  searchDt: '',
+  status: '',
+  search: ''
+})
+
+type SearchForm = ReturnType<typeof initial>
+
 const TEST_OPTIONS = [
   { value: '11', label: '피카츄' },
   { value: '12', label: '라이츄' },
@@ -16,13 +28,16 @@ const TEST_OPTIONS = [
 ]
 
 export default function Dtin() {
-  const [wms, setWms] = useState('')
-  const [searchDt, setSearchDt] = useState('')
-  const [status, setStatus] = useState('')
-  const [orderStatus, setOrderStatus] = useState('')
 
-  const [startDate, setStartDate] = useState(() => subDays(new Date(), 7))
-  const [endDate, setEndDate] = useState(() => new Date())
+  const [form, setForm] = useState(initial)
+
+  const set = <K extends keyof SearchForm>(key: K) => (value: SearchForm[K]) =>{
+    setForm((f) => ({ ...f, [key]: value }))
+  }
+   
+  const handleSearch = () => {
+    console.log(form);   
+  }
 
   return (
     <div>
@@ -41,31 +56,31 @@ export default function Dtin() {
       </PageHeader>
       <SearchPanel
         keywordPlaceholder="검색어를 입력해주세요."
+        keyword={form.search}
+        onKeywordChange={set('search')}
         detailSearch={
-          <>
+          <>            
             <FiledSearch
               title="ORDER STATUS"
               option={TEST_OPTIONS}
-              value={orderStatus}
-              onChange={setOrderStatus}
+              value={form.status}
+              onChange={set('status')}
             />
           </>
         }
         detailSearchTitle={'Detailed Search'}
-        onReset={() => {}}
-        onSearch={() => {}}
+        onReset={() => setForm(initial())}
+        onSearch={handleSearch}
       >
-        <FiledSearch title="WMS" option={TEST_OPTIONS} value={wms} onChange={setWms} />
-        <FieldDatePicker title="시작일" value={startDate} onChange={setStartDate} />
-        <FieldDatePicker title="종료일" value={endDate} onChange={setEndDate} />
+        <FiledSearch title="WMS" option={TEST_OPTIONS} value={form.wmsLinkId} onChange={set('wmsLinkId')} />
+        <FieldDatePicker title="시작일" value={form.startDt} onChange={set('startDt')} />
+        <FieldDatePicker title="종료일" value={form.endDt} onChange={set('endDt')} />
         <FiledSearch
           title="기준일자"
           option={TEST_OPTIONS}
-          value={searchDt}
-          onChange={setSearchDt}
+          value={form.searchDt}
+          onChange={set('searchDt')}
         />
-
-        <FiledSearch title="입고상태" option={TEST_OPTIONS} value={status} onChange={setStatus} />
       </SearchPanel>
     </div>
   )
