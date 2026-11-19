@@ -1,12 +1,16 @@
+import DataGrid from '@/components/common/DataGrid'
 import ExportButton from '@/components/common/ExportButton'
 import FieldDatePicker from '@/components/common/FieldDatePicker'
 import FiledSearch from '@/components/common/FiledSearch'
 import PageHeader from '@/components/common/PageHeader'
 import SearchPanel from '@/components/common/SearchPanel'
 import StatusBadge from '@/components/common/StatusBadge'
+import { DTIN_DUMMY } from '@/mocks/dtin'
 import { subDays } from 'date-fns'
 import { useState } from 'react'
-
+import { dtinColumns } from './columns'
+import type { DtinItem } from '@/types/dtin'
+import DtinDetailDialog from './DtinDetailDialog'
 
 const initial = () => ({
   wmsLinkId: '',
@@ -14,7 +18,7 @@ const initial = () => ({
   endDt: new Date(),
   searchDt: '',
   status: '',
-  search: ''
+  search: '',
 })
 
 type SearchForm = ReturnType<typeof initial>
@@ -28,16 +32,20 @@ const TEST_OPTIONS = [
 ]
 
 export default function Dtin() {
-
   const [form, setForm] = useState(initial)
+  const [selected, setSelected] = useState<DtinItem | null>(null)
 
-  const set = <K extends keyof SearchForm>(key: K) => (value: SearchForm[K]) =>{
-    setForm((f) => ({ ...f, [key]: value }))
-  }
-   
+  const set =
+    <K extends keyof SearchForm>(key: K) =>
+    (value: SearchForm[K]) => {
+      setForm((f) => ({ ...f, [key]: value }))
+    }
+
   const handleSearch = () => {
-    console.log(form);   
+    console.log(form)
   }
+
+  const handleRowDetail = (item: DtinItem) => setSelected(item)
 
   return (
     <div>
@@ -59,7 +67,7 @@ export default function Dtin() {
         keyword={form.search}
         onKeywordChange={set('search')}
         detailSearch={
-          <>            
+          <>
             <FiledSearch
               title="ORDER STATUS"
               option={TEST_OPTIONS}
@@ -72,7 +80,12 @@ export default function Dtin() {
         onReset={() => setForm(initial())}
         onSearch={handleSearch}
       >
-        <FiledSearch title="WMS" option={TEST_OPTIONS} value={form.wmsLinkId} onChange={set('wmsLinkId')} />
+        <FiledSearch
+          title="WMS"
+          option={TEST_OPTIONS}
+          value={form.wmsLinkId}
+          onChange={set('wmsLinkId')}
+        />
         <FieldDatePicker title="시작일" value={form.startDt} onChange={set('startDt')} />
         <FieldDatePicker title="종료일" value={form.endDt} onChange={set('endDt')} />
         <FiledSearch
@@ -82,6 +95,10 @@ export default function Dtin() {
           onChange={set('searchDt')}
         />
       </SearchPanel>
+
+      <DataGrid data={DTIN_DUMMY} columns={dtinColumns} onRowClick={handleRowDetail} />
+
+      <DtinDetailDialog item={selected} onClose={() => setSelected(null)} />
     </div>
   )
 }
